@@ -2,13 +2,13 @@
 
 import axios from "axios";
 
-const currentWeatherData = () => {
+const currentWeatherData = (city = "dhaka") => {
   return axios
     .get("https://api.weatherapi.com/v1/forecast.json", {
       params: {
         key: "77f64c2745ca46eca0962940222712",
         aqi: "yes",
-        q: "new york",
+        q: city,
         days: 3,
         alerts: "yes",
       },
@@ -44,7 +44,7 @@ function parseCurrentLocation({ location }) {
     day: "numeric",
   });
 
-  const { name: city, country: country } = location;
+  const { name: city, country } = location;
 
   return {
     city,
