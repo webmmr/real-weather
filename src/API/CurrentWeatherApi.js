@@ -2,13 +2,12 @@
 
 import axios from "axios";
 
-const currentWeatherData = (city = "dhaka") => {
+const currentWeatherData = (lat = 49, lon = 10) => {
   return axios
-    .get("https://api.weatherapi.com/v1/forecast.json", {
+    .get(`https://api.weatherapi.com/v1/forecast.json?q=${lat},${lon}`, {
       params: {
         key: "77f64c2745ca46eca0962940222712",
         aqi: "yes",
-        q: city,
         days: 3,
         alerts: "yes",
       },
@@ -19,6 +18,7 @@ const currentWeatherData = (city = "dhaka") => {
         alerts: parseAlert(data),
         currentLocation: parseCurrentLocation(data),
         currentWeather: pareseCurrentWeather(data),
+        forecast: parseForecast(data),
       };
     });
 };
@@ -27,7 +27,7 @@ function parseAlert({ alerts }) {
   if (alerts.length > 0) {
     const currentAlert = alerts.alert[0].desc;
     return currentAlert;
-  } else return "There is no weather alet at the moment";
+  } else return "There is no weather alert at the moment";
 }
 function parseCurrentLocation({ location }) {
   const [date, time] = location.localtime.split(" ");
@@ -62,7 +62,7 @@ function pareseCurrentWeather({ current }) {
     icon: conditionIcon,
   } = current.condition;
 
-  const [date, time] = current.last_updated.split(" ");
+  const time = current.last_updated.slice(-5);
   const [hour, minute] = time.split(":");
 
   const lastUpdatedTime = `${hour <= 12 ? hour : hour - 12}:${minute} ${
@@ -119,6 +119,18 @@ function pareseCurrentWeather({ current }) {
     windK,
     windM,
   };
+}
+
+function parseForecast({ forecast }) {
+  const forecastDays = forecast.forecastday;
+  const newForecastArray = [];
+  forecastDays.map((forecastDay, index) => {
+    // console.log(forecastDay);
+    const { date, date_epoch, ...newForecastDay } = forecastDay;
+    newForecastArray.push(newForecastDay);
+  });
+
+  return newForecastArray;
 }
 
 export default currentWeatherData;
