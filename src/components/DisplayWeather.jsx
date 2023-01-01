@@ -18,7 +18,7 @@ const DisplayWeather = ({ alerts, location, current, forecast }) => {
     <section style={bgStyle} className="main-section flex items-center">
       <div className="container mx-auto py-8">
         {/* Current Weather Widget */}
-        <div className=" max-w-full bg-slate-900 opacity-90 shadow-lg p-8 rounded-[20px]">
+        <div className=" max-w-full bg-slate-900 opacity-90 shadow-lg p-8 mx-20 rounded-[20px]">
           {/* Search Bar */}
           <div className="mb-0">{/* <Search /> */}</div>
           {/* City & Current time */}

@@ -41,7 +41,13 @@ const CurrenWeatherDetails = ({ alerts, location, current }) => {
       </div>
 
       {/* Other Properties */}
-      <div className="text-red-400 mb-3">{alerts}</div>
+      {alerts && (
+        <div className="text-white mb-3">
+          <span className="text-red-400">Weather Alert: </span>
+          {alerts}
+        </div>
+      )}
+
       <div className="flex justify-between items-center">
         {/* Wind Speed */}
         <DisplayData

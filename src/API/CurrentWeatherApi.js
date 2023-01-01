@@ -27,7 +27,7 @@ function parseAlert({ alerts }) {
   if (alerts.length > 0) {
     const currentAlert = alerts.alert[0].desc;
     return currentAlert;
-  } else return "There is no weather alert at the moment";
+  } else return null;
 }
 function parseCurrentLocation({ location }) {
   const [date, time] = location.localtime.split(" ");
