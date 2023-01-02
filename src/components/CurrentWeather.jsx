@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import currentWeatherData from "../API/currentWeatherApi";
+import currentWeatherData from "../api/currentWeatherApi";
 import DisplayWeather from "./DisplayWeather";
 
 function CurrentWeather({ lat, lon }) {

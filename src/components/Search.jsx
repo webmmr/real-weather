@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
-import searchDataApi from "../API/searchDataApi";
+import searchDataApi from "../api/searchDataApi";
 
 const Search = () => {
   const [search, setSearch] = useState("");
