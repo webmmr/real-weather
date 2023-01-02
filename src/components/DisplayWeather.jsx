@@ -1,12 +1,14 @@
 import { useState } from "react";
+import Search from "./Search";
 import defaultBgImage from "../assets/default.png";
 
 import CurrenWeatherDetails from "./CurrenWeatherDetails";
 import ForecastDetails from "./ForecastDetails";
 
-const DisplayWeather = ({ alerts, location, current, forecast }) => {
+const DisplayWeather = ({ alerts, location, current, forecast, isLoading }) => {
   const [bgImage, setBgImage] = useState(defaultBgImage);
   const [viewForecast, setViewForecast] = useState(false);
+  const [imperial, setImperial] = useState(false);
 
   const bgStyle = {
     backgroundImage: `url(${bgImage})`,
@@ -19,7 +21,15 @@ const DisplayWeather = ({ alerts, location, current, forecast }) => {
       <div className="container mx-auto py-8">
         {/* Current Weather Widget */}
         <div className=" max-w-full bg-slate-900 opacity-90 shadow-lg p-8 mx-20 rounded-[20px]">
-          {/* Search Bar */}
+          <div className="mb-2 flex items-center justify-between">
+            <Search />
+            <button
+              className="text-slate-400 underline hover:text-yellow-400"
+              onClick={() => setImperial(!imperial)}
+            >
+              {!imperial ? "See in Imperial Unit" : "See in Metric Unit"}
+            </button>
+          </div>
           <div className="mb-0">{/* <Search /> */}</div>
           {/* City & Current time */}
           <div className="flex justify-between items-end pb-4 border-b-2 border-b-slate-700">
@@ -43,21 +53,20 @@ const DisplayWeather = ({ alerts, location, current, forecast }) => {
               </h2>
             </div>
           </div>
-
           {!viewForecast ? (
             <CurrenWeatherDetails
               alerts={alerts}
               location={location}
               current={current}
+              isImperial={imperial}
             />
           ) : (
-            <ForecastDetails forecast={forecast} />
+            <ForecastDetails forecast={forecast} isImperial={imperial} />
           )}
-
           <div className="flex justify-between">
             <button
               id="forecast-btn"
-              className="text-slate-400 hover:text-yellow-400"
+              className="text-slate-400 hover:text-yellow-400 underline"
               onClick={() => setViewForecast(!viewForecast)}
             >
               {!viewForecast ? "See Forecast" : "See Current Details"}

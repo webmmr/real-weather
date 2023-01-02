@@ -1,8 +1,6 @@
-// https://api.weatherapi.com/v1/current.json?key=77f64c2745ca46eca0962940222712&q=Dhaka&aqi=yes
-
 import axios from "axios";
 
-const currentWeatherData = (lat = 49, lon = 10) => {
+const currentWeatherData = (lat, lon) => {
   return axios
     .get(`https://api.weatherapi.com/v1/forecast.json?q=${lat},${lon}`, {
       params: {

@@ -16,28 +16,28 @@ import {
 } from "@iconscout/react-unicons";
 import ShowChart from "./ShowChart";
 
-// // STEP 4 - Creating the DOM element to pass the react-fusioncharts component
-// class App extends React.Component {
-//   render() {
-//     return (<ReactFC {...chartConfigs} />);
-//   }
-// }
-
-// export default App;
-
-const ForecastDetails = ({ forecast }) => {
-  // console.log(forecast);
+const ForecastDetails = ({ forecast, isImperial }) => {
   const [openTab, setOpenTab] = useState(1);
 
   const newForecast = forecast.map((eachday) => {
     let { astro, day, hour } = eachday;
 
     let newHour = {};
+    if (!isImperial) {
+      newHour = hour.map(({ temp_c: value, time: label }) => ({
+        label: label.slice(-5),
+        value: value.toFixed(0),
+        date: label,
+      }));
+    }
 
-    newHour = hour.map(({ temp_c: value, time: label }) => ({
-      label: label.slice(-5),
-      value: value.toFixed(0),
-    }));
+    if (isImperial) {
+      newHour = hour.map(({ temp_f: value, time: label }) => ({
+        label: label.slice(-5),
+        value: value.toFixed(0),
+        date: label,
+      }));
+    }
 
     const { text: condition } = day.condition;
 
@@ -79,6 +79,13 @@ const ForecastDetails = ({ forecast }) => {
   const theNextDayData = newForecast[2];
 
   if (todayData && tomorrowData && theNextDayData) {
+    const newDate = theNextDayData.newHour[0].date;
+    const currentDate = new Date(newDate).toLocaleDateString("en-us", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+
     return (
       <div>
         <div className="container mx-auto mt-5 mb-3">
@@ -111,7 +118,7 @@ const ForecastDetails = ({ forecast }) => {
                     openTab === 3 ? "bg-white text-slate-800" : "bg-zinc-300"
                   } inline-block px-4 py-2 text-slate-600  rounded shadow`}
                 >
-                  The Next Day
+                  {currentDate}
                 </button>
               </li>
             </ul>
@@ -172,8 +179,12 @@ const ForecastDetails = ({ forecast }) => {
                       <DisplayData
                         icon={<UilTear />}
                         title="Precipitation"
-                        value={todayData.newDay.totalprecip_mm}
-                        unit="mm"
+                        value={
+                          !isImperial
+                            ? todayData.newDay.totalprecip_mm
+                            : todayData.newDay.totalprecip_in
+                        }
+                        unit={!isImperial ? "mm" : "in"}
                       />
                       {/* Humidity */}
                       <DisplayData
@@ -186,8 +197,12 @@ const ForecastDetails = ({ forecast }) => {
                       <DisplayData
                         icon={<UilEye />}
                         title="Visibility"
-                        value={todayData.newDay.avgvis_km}
-                        unit="km"
+                        value={
+                          !isImperial
+                            ? todayData.newDay.avgvis_km
+                            : todayData.newDay.avgvis_miles
+                        }
+                        unit={!isImperial ? "km" : "miles"}
                       />
                     </>
                   }
@@ -213,15 +228,25 @@ const ForecastDetails = ({ forecast }) => {
                       <DisplayData
                         icon={<UilCloudWind />}
                         title="Avg Wind Speed"
-                        value={todayData.newDay.maxwind_kph}
-                        unit="km/h"
+                        value={
+                          !isImperial
+                            ? todayData.newDay.maxwind_kph
+                            : todayData.newDay.maxwind_kph
+                        }
+                        unit={!isImperial ? "km/h" : "miles/h"}
                       />
                     </>
                   }
                 </div>
-                <div className="py-2">
-                  <ShowChart chartData={[todayData.newHour]} />
-                </div>
+
+                {openTab === 1 && (
+                  <div className="py-2">
+                    <ShowChart
+                      chartData={[todayData.newHour]}
+                      isImperial={isImperial}
+                    />
+                  </div>
+                )}
               </div>
               <div className={openTab === 2 ? "block" : "hidden"}>
                 <div className="flex justify-between items-center">
@@ -261,7 +286,7 @@ const ForecastDetails = ({ forecast }) => {
                       <DisplayData
                         icon={<UilMoonset />}
                         title="moonset"
-                        value={todayData.astro.moonset}
+                        value={tomorrowData.astro.moonset}
                       />
                       {/* Moon Phase */}
                       <DisplayData
@@ -279,22 +304,30 @@ const ForecastDetails = ({ forecast }) => {
                       <DisplayData
                         icon={<UilTear />}
                         title="Precipitation"
-                        value={tomorrowData.newDay.totalprecip_mm}
-                        unit="mm"
+                        value={
+                          !isImperial
+                            ? tomorrowData.newDay.totalprecip_mm
+                            : tomorrowData.newDay.totalprecip_in
+                        }
+                        unit={!isImperial ? "mm" : "in"}
                       />
                       {/* Humidity */}
                       <DisplayData
                         icon={<UilTemperature />}
                         title="Humidity"
-                        value={todayData.newDay.avghumidity}
+                        value={tomorrowData.newDay.avghumidity}
                         unit="%"
                       />
                       {/* Visibility */}
                       <DisplayData
                         icon={<UilEye />}
                         title="Visibility"
-                        value={tomorrowData.newDay.avgvis_km}
-                        unit="km"
+                        value={
+                          !isImperial
+                            ? tomorrowData.newDay.avgvis_km
+                            : tomorrowData.newDay.avgvis_miles
+                        }
+                        unit={!isImperial ? "km" : "miles"}
                       />
                     </>
                   }
@@ -320,15 +353,21 @@ const ForecastDetails = ({ forecast }) => {
                       <DisplayData
                         icon={<UilCloudWind />}
                         title="Avg Wind Speed"
-                        value={tomorrowData.newDay.maxwind_kph}
-                        unit="km/h"
+                        value={
+                          !isImperial
+                            ? tomorrowData.newDay.maxwind_kph
+                            : tomorrowData.newDay.maxwind_kph
+                        }
+                        unit={!isImperial ? "km/h" : "miles/h"}
                       />
                     </>
                   }
                 </div>
-                <div className="py-2">
-                  <ShowChart chartData={[tomorrowData.newHour]} />
-                </div>
+                {openTab === 2 && (
+                  <div className="py-2">
+                    <ShowChart chartData={[tomorrowData.newHour]} />
+                  </div>
+                )}
               </div>
               <div className={openTab === 3 ? "block" : "hidden"}>
                 <div className="flex justify-between items-center">
@@ -386,8 +425,12 @@ const ForecastDetails = ({ forecast }) => {
                       <DisplayData
                         icon={<UilTear />}
                         title="Precipitation"
-                        value={theNextDayData.newDay.totalprecip_mm}
-                        unit="mm"
+                        value={
+                          !isImperial
+                            ? theNextDayData.newDay.totalprecip_mm
+                            : theNextDayData.newDay.totalprecip_in
+                        }
+                        unit={!isImperial ? "mm" : "in"}
                       />
                       {/* Humidity */}
                       <DisplayData
@@ -400,8 +443,12 @@ const ForecastDetails = ({ forecast }) => {
                       <DisplayData
                         icon={<UilEye />}
                         title="Visibility"
-                        value={theNextDayData.newDay.avgvis_km}
-                        unit="km"
+                        value={
+                          !isImperial
+                            ? theNextDayData.newDay.avgvis_km
+                            : theNextDayData.newDay.avgvis_miles
+                        }
+                        unit={!isImperial ? "km" : "miles"}
                       />
                     </>
                   }
@@ -427,15 +474,21 @@ const ForecastDetails = ({ forecast }) => {
                       <DisplayData
                         icon={<UilCloudWind />}
                         title="Avg Wind Speed"
-                        value={theNextDayData.newDay.maxwind_kph}
-                        unit="km/h"
+                        value={
+                          !isImperial
+                            ? theNextDayData.newDay.maxwind_kph
+                            : theNextDayData.newDay.maxwind_kph
+                        }
+                        unit={!isImperial ? "km/h" : "miles/h"}
                       />
                     </>
                   }
                 </div>
-                <div className="py-2">
-                  <ShowChart chartData={[theNextDayData.newHour]} />
-                </div>
+                {openTab === 3 && (
+                  <div className="py-2">
+                    <ShowChart chartData={[theNextDayData.newHour]} />
+                  </div>
+                )}
               </div>
             </div>
           </div>

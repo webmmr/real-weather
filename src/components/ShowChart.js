@@ -6,8 +6,7 @@ import FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
 
 ReactFC.fcRoot(FusionCharts, line, FusionTheme);
 
-const ShowChart = ({ chartData }) => {
-  console.log(chartData);
+const ShowChart = ({ chartData, isImperial }) => {
   const chartConfigs = {
     type: "line", // The chart type
     width: "100%", // Width of the chart
@@ -23,7 +22,6 @@ const ShowChart = ({ chartData }) => {
         xAxisName: "Hour",
         //Set the y-axis name
         yAxisName: "Temperature",
-        numberSuffix: "°C",
         showValues: "1",
         bgColor: "#E2E8F0",
         //Set the theme for your chart
@@ -33,6 +31,12 @@ const ShowChart = ({ chartData }) => {
       data: chartData[0],
     },
   };
+
+  if (!isImperial) {
+    chartConfigs.dataSource.chart.numberSuffix = "°C";
+  } else {
+    chartConfigs.dataSource.chart.numberSuffix = "°F";
+  }
 
   return <ReactFC {...chartConfigs} />;
 };

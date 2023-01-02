@@ -12,7 +12,7 @@ import {
   UilCloud,
 } from "@iconscout/react-unicons";
 
-const CurrenWeatherDetails = ({ alerts, location, current }) => {
+const CurrenWeatherDetails = ({ alerts, location, current, isImperial }) => {
   return (
     <>
       {/* Current Temp & Condition*/}
@@ -21,12 +21,18 @@ const CurrenWeatherDetails = ({ alerts, location, current }) => {
           <div className="flex items-start">
             <div className="flex flex-col">
               <div className="flex">
-                <h1 className="text-6xl text-slate-100">{current.tempC}</h1>
-                <p className="text-2xl text-slate-100 ml-3">&deg;C</p>
+                <h1 className="text-6xl text-slate-100">
+                  {!isImperial ? current.tempC : current.tempF}
+                </h1>
+                <p className="text-2xl text-slate-100 ml-3">
+                  {!isImperial ? "°C" : "°F"}
+                </p>
               </div>
               <div className="flex items-start">
                 <p className="text-slate-300 mt-1  text-lg">
-                  Feels Like: {current.feelsLikeC} &deg;C
+                  Feels Like:{" "}
+                  {!isImperial ? current.feelsLikeC : current.feelsLikeF}{" "}
+                  {!isImperial ? "°C" : "°F"}
                 </p>
               </div>
             </div>
@@ -53,8 +59,8 @@ const CurrenWeatherDetails = ({ alerts, location, current }) => {
         <DisplayData
           icon={<UilCloudWind />}
           title="Wind Speed"
-          value={current.windK}
-          unit="km/h"
+          value={!isImperial ? current.windK : current.windM}
+          unit={!isImperial ? "km/h" : "miles/h"}
           subtitle={`${current.windDegree}°`}
           sub_text={current.windDir}
         />
@@ -63,8 +69,8 @@ const CurrenWeatherDetails = ({ alerts, location, current }) => {
         <DisplayData
           icon={<UilTemperatureThreeQuarter />}
           title="Pressure"
-          value={current.pressureMb}
-          unit="mb"
+          value={!isImperial ? current.pressureMb : current.pressureMb}
+          unit={!isImperial ? "mb" : "in"}
         />
 
         {/* Humidity*/}
@@ -80,16 +86,16 @@ const CurrenWeatherDetails = ({ alerts, location, current }) => {
         <DisplayData
           icon={<UilUmbrella />}
           title="Precipitation"
-          value={current.precipMm}
-          unit="mm"
+          value={!isImperial ? current.precipMm : current.precipIn}
+          unit={!isImperial ? "mm" : "in"}
         />
 
         {/* Visibility */}
         <DisplayData
           icon={<UilEye />}
           title="Visibility"
-          value={current.visibilityKm}
-          unit="km"
+          value={!isImperial ? current.visibilityKm : current.visibilityMiles}
+          unit={!isImperial ? "km" : "miles"}
         />
 
         {/* UV Index*/}
@@ -136,8 +142,8 @@ const CurrenWeatherDetails = ({ alerts, location, current }) => {
         <DisplayData
           icon={<UilWind />}
           title="Wind Gusts"
-          value={current.gustK}
-          unit="km/h"
+          value={!isImperial ? current.gustK : current.gustM}
+          unit={!isImperial ? "km/h" : "miles/h"}
         />
 
         {/* Air Quality Index*/}

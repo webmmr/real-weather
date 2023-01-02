@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import currentWeatherData from "../API/currentWeatherApi";
 import DisplayWeather from "./DisplayWeather";
 
-function CurrentWeather(lat, lon) {
+function CurrentWeather({ lat, lon }) {
   const [location, setLocation] = useState([]);
   const [current, setCurrent] = useState([]);
   const [forecast, setForecast] = useState([]);
   const [alerts, setAlerts] = useState([]);
 
   useEffect(() => {
-    currentWeatherData()
+    currentWeatherData(lat, lon)
       .then(({ alerts, currentLocation, currentWeather, forecast }) => {
         // console.log(data);
         setAlerts(alerts);
