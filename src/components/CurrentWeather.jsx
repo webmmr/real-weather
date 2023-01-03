@@ -8,8 +8,6 @@ function CurrentWeather({ lat, lon }) {
   const [forecast, setForecast] = useState([]);
   const [alerts, setAlerts] = useState([]);
 
-  console.log(lat, lon);
-
   useEffect(() => {
     currentWeatherData(lat, lon)
       .then(({ alerts, currentLocation, currentWeather, forecast }) => {

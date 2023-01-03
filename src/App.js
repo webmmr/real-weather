@@ -26,8 +26,8 @@ function App() {
       <>
         <Routes>
           <Route path="/search/:searchTerm" element={<Search />} />
+          <Route path="/" element={<CurrentWeather lat={lat} lon={lon} />} />
         </Routes>
-        <CurrentWeather lat={lat} lon={lon} />;
       </>
     );
   }
