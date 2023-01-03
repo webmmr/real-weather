@@ -10,11 +10,10 @@ const searchDataApi = (city) => {
       },
     })
     .then(({ data }) => {
-      const cityName = data[0].name;
-
-      <CurrentWeather idiot={`${cityName}`} />;
-      console.log("hi");
-    });
+      const lat = data[0].lat;
+      const lon = data[0].lon;
+    })
+    .catch((e) => console.log(e));
 };
 
 export default searchDataApi;

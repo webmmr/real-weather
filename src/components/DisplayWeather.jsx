@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Search from "./Search";
+import Searchbar from "./SearchForm";
 import defaultBgImage from "../assets/default.png";
 
 import CurrenWeatherDetails from "./CurrenWeatherDetails";
@@ -22,7 +22,7 @@ const DisplayWeather = ({ alerts, location, current, forecast, isLoading }) => {
         {/* Current Weather Widget */}
         <div className=" max-w-full bg-slate-900 opacity-90 shadow-lg p-8 mx-20 rounded-[20px]">
           <div className="mb-2 flex items-center justify-between">
-            <Search />
+            <Searchbar />
             <button
               className="text-slate-400 underline hover:text-yellow-400"
               onClick={() => setImperial(!imperial)}

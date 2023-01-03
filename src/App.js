@@ -1,5 +1,7 @@
 import { useState } from "react";
 import CurrentWeather from "./components/CurrentWeather";
+import { Routes, Route } from "react-router-dom";
+import Search from "./components/Search";
 
 function App() {
   const [lat, setLat] = useState(null);
@@ -10,8 +12,8 @@ function App() {
   } else {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        setLat(position.coords.latitude);
-        setLon(position.coords.longitude);
+        setLat(position.coords.latitude.toFixed(2));
+        setLon(position.coords.longitude.toFixed(2));
       },
       () => {
         console.log("Unable to retrieve your location");
@@ -20,7 +22,14 @@ function App() {
   }
 
   if (lat && lon) {
-    return <CurrentWeather lat={lat} lon={lon} />;
+    return (
+      <>
+        <Routes>
+          <Route path="/search/:searchTerm" element={<Search />} />
+        </Routes>
+        <CurrentWeather lat={lat} lon={lon} />;
+      </>
+    );
   }
 }
 
