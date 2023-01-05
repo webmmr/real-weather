@@ -365,7 +365,10 @@ const ForecastDetails = ({ forecast, isImperial }) => {
                 </div>
                 {openTab === 2 && (
                   <div className="py-2">
-                    <ShowChart chartData={[tomorrowData.newHour]} />
+                    <ShowChart
+                      chartData={[tomorrowData.newHour]}
+                      isImperial={isImperial}
+                    />
                   </div>
                 )}
               </div>
@@ -486,7 +489,10 @@ const ForecastDetails = ({ forecast, isImperial }) => {
                 </div>
                 {openTab === 3 && (
                   <div className="py-2">
-                    <ShowChart chartData={[theNextDayData.newHour]} />
+                    <ShowChart
+                      chartData={[theNextDayData.newHour]}
+                      isImperial={isImperial}
+                    />
                   </div>
                 )}
               </div>

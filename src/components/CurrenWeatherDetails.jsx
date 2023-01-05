@@ -21,15 +21,15 @@ const CurrenWeatherDetails = ({ alerts, location, current, isImperial }) => {
           <div className="flex items-start">
             <div className="flex flex-col">
               <div className="flex">
-                <h1 className="text-6xl text-slate-100">
+                <h1 className="text-3xl sm:text-6xl text-slate-100">
                   {!isImperial ? current.tempC : current.tempF}
                 </h1>
-                <p className="text-2xl text-slate-100 ml-3">
+                <p className="text-xl sm:text-2xl text-slate-100 ml-3">
                   {!isImperial ? "°C" : "°F"}
                 </p>
               </div>
               <div className="flex items-start">
-                <p className="text-slate-300 mt-1  text-lg">
+                <p className="text-slate-300 mt-1 sm:text-lg">
                   Feels Like:{" "}
                   {!isImperial ? current.feelsLikeC : current.feelsLikeF}{" "}
                   {!isImperial ? "°C" : "°F"}
@@ -38,9 +38,9 @@ const CurrenWeatherDetails = ({ alerts, location, current, isImperial }) => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col items-end">
+        <div className="flex sm:flex-col sm:items-end items-center">
           <img src={current.conditionIcon} alt="condition icon" width={70} />
-          <h1 className="text-white text-xl font-light">
+          <h1 className="text-white text-lg sm:text-xl font-light">
             {current.conditionText}
           </h1>
         </div>
