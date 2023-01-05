@@ -7,7 +7,7 @@ const DisplayData = ({
   sub_text = "",
 }) => {
   return (
-    <div className="flex flex-col lg:flex-row flex-grow lg:items-center p-3 rounded-lg bg-slate-200 mr-2 mb-2  ">
+    <div className="flex flex-col lg:flex-row flex-1 lg:items-center p-3 rounded-lg bg-slate-200 mr-2 mb-2  ">
       <div className="bg-slate-300 rounded-full mr-3 p-2 text-slate-800 w-[40px]">
         {icon}
       </div>

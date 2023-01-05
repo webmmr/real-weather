@@ -25,8 +25,10 @@ const DisplayWeather = ({ alerts, location, current, forecast, isLoading }) => {
   useEffect(() => {
     if (current.conditionCode === 1000 && current.conditionText === "Clear") {
       setBgImage(clearNight);
-    }
-    if (current.conditionCode === 1000 && current.conditionText === "Sunny") {
+    } else if (
+      current.conditionCode === 1000 &&
+      current.conditionText === "Sunny"
+    ) {
       setBgImage(sunny);
     }
     if (
@@ -120,7 +122,7 @@ const DisplayWeather = ({ alerts, location, current, forecast, isLoading }) => {
     ) {
       setBgImage(icePalette);
     }
-  }, [current.conditionCode]);
+  }, [current.conditionCode, current.conditionText]);
 
   const bgStyle = {
     backgroundImage: `url(${bgImage})`,
